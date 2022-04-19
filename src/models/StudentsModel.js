@@ -4,9 +4,23 @@ const { default: mongoose } = require('mongoose');
 const DataSchema = mongoose.Schema({
   Name: String,
   Roll: String,
+  Mobile: {
+    type: String,
+    validate: {
+      validator: function (value) {
+        // if (value.length === 11) {
+        //   return true
+        // } else {
+        //   return false
+        // }
+        return /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/.test(value);
+      },
+      message: 'Invalid bangladeshi phone number'
+    }
+  },
   Class: String,
-  Remarks: {type: String, default: 'No Remarks'},
-}, {versionKey: false});
+  Remarks: { type: String, default: 'No Remarks' },
+}, { versionKey: false });
 
 // Students data model
 const StudentsModel = mongoose.model('students', DataSchema);
